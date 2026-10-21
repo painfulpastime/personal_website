@@ -1,0 +1,11 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import ProjectVisual from './ProjectVisual.astro';
+import { href } from '../lib/paths';
+interface Props { project: CollectionEntry<'projects'>; index: number }
+const { project, index } = Astro.props;
+---
+<article class="project-card">
+  <a class="project-image-link" href={href(`work/${project.id}/`)} aria-label={`Explore ${project.data.title}`}><ProjectVisual kind={project.data.cover} /></a>
+  <div class="project-caption"><span class="index-number">0{index + 1}</span><div><p class="micro">{project.data.category}</p><h3><a href={href(`work/${project.id}/`)}>{project.data.title}<span aria-hidden="true">↗</span></a></h3><p>{project.data.description}</p><div class="tags">{project.data.tags.map(tag => <span>{tag}</span>)}</div></div></div>
+</article>

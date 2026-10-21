@@ -1,0 +1,23 @@
+---
+import { Image } from 'astro:assets';
+import chart from '../assets/thesis-cost.png';
+interface Props { kind: 'kokoro' | 'thesis' }
+const { kind } = Astro.props;
+const heights = [16, 24, 42, 28, 64, 94, 58, 38, 112, 144, 104, 68, 36, 62, 108, 154, 128, 76, 42, 96, 120, 66, 36, 54, 84, 40, 22, 16];
+---
+{kind === 'kokoro' ? (
+  <div class="project-visual kokoro-visual" aria-hidden="true">
+    <div class="visual-top"><span>PERSONAL KOKORO</span><span>C++ / LOCAL TTS</span></div>
+    <div class="waveform">
+      <svg viewBox="0 0 540 180" fill="none"><g stroke="currentColor" stroke-width="8" stroke-linecap="square">{heights.map((h, i) => <path d={`M${14 + i * 19} ${90 - h / 2}v${h}`} />)}</g></svg>
+    </div>
+    <div class="visual-bottom"><span class="visual-large">Text.<br />Meet voice.</span><span class="circle-play">↗</span></div>
+    <span class="visual-foot">PASTE → CHUNK → LISTEN</span>
+  </div>
+) : (
+  <div class="project-visual thesis-visual">
+    <div class="visual-top"><span>FORECAST → DECISION</span><span>RESEARCH / 2026 REVISION</span></div>
+    <div class="chart-paper"><Image src={chart} alt="Saved thesis results comparing forecast error and bias with simulated operating cost." widths={[520, 900, 1200]} sizes="(max-width: 700px) 95vw, 46vw" width={900} format="webp" loading="lazy" /></div>
+    <div class="visual-bottom"><span>BETTER FORECAST.<br />BETTER DECISION?</span><span>↗</span></div>
+  </div>
+)}

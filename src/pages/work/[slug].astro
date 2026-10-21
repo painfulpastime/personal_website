@@ -1,0 +1,10 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import ProjectVisual from '../../components/ProjectVisual.astro';
+import { href } from '../../lib/paths';
+export async function getStaticPaths() { return (await getCollection('projects')).map(project => ({ params: { slug: project.id }, props: { project } })); }
+const { project } = Astro.props;
+const { Content } = await render(project);
+---
+<Base title={project.data.title} description={project.data.description} active="work"><article class="wrap inner-page"><header class="page-intro"><p class="eyebrow">{project.data.category} / {project.data.year}</p><h1>{project.data.title}<span class="red-dot">.</span></h1><p class="lead">{project.data.subtitle}</p></header><div class="case-hero"><ProjectVisual kind={project.data.cover} /></div><div class="case-layout"><aside class="case-meta"><div><p class="micro">PROJECT</p><p>{project.data.category}</p></div><div><p class="micro">WHEN</p><p>{project.data.year}</p></div><div><p class="micro">TOOLS & TOPICS</p>{project.data.tags.map(tag => <p>{tag}</p>)}</div></aside><div><div class="prose"><Content /></div><a class="back-link" href={href('work/')}>← All work</a></div></div></article></Base>

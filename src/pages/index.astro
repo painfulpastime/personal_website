@@ -1,0 +1,41 @@
+---
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import portrait from '../assets/portrait.png';
+import design from '../assets/creative.png';
+import photo from '../assets/photography.jpg';
+import { href } from '../lib/paths';
+import { learning } from '../data/profile';
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+---
+<Base>
+  <div class="wrap">
+    <section class="hero" aria-labelledby="hero-heading">
+      <div class="hero-copy"><p class="eyebrow"><span class="index-number">01</span> ENGINEER. SYSTEMS THINKER. CREATIVE.</p>
+        <h1 id="hero-heading"><span>Making sense</span><span>of complex</span><span>systems<span class="red-dot">.</span></span></h1>
+        <p class="hero-description">I’m Simon, a Kenyan engineer based in Mauritius. I work on systems modelling and uncertainty—and follow my curiosity into software, finance, and design.</p>
+        <div class="hero-actions"><a class="text-link" href="#contact">Get in touch <span aria-hidden="true">↗</span></a><a class="quiet-link" href={href('cv/')}>View CV <span aria-hidden="true">↗</span></a></div>
+      </div>
+      <div class="hero-art"><div class="hero-shuka shuka fringe-down" aria-hidden="true"></div><div class="art-caption"><span>SHUKA CHECK. A NOD TO HOME.</span><span>KENYA → MAURITIUS</span></div></div>
+    </section>
+    <div class="focus-strip"><span>SYSTEMS MODELLING</span><i aria-hidden="true"></i><span>OPTIMISATION</span><i aria-hidden="true"></i><span>SOFTWARE</span><i aria-hidden="true"></i><span>CREATIVE PRACTICE</span></div>
+    <section class="section work-section" aria-labelledby="work-title">
+      <div class="section-head"><div><p class="eyebrow"><span class="index-number">02</span> IDEAS, PUT TO WORK</p><h2 id="work-title">Selected work<span class="red-dot">.</span></h2></div><a class="text-link small-link" href={href('work/')}>Explore the work <span aria-hidden="true">↗</span></a></div>
+      <div class="project-grid">{projects.map((project, index) => <ProjectCard project={project} index={index} />)}</div>
+    </section>
+    <div class="beads" aria-hidden="true"></div>
+    <section class="section learning-section" aria-labelledby="learning-title">
+      <div class="section-head"><div><p class="eyebrow"><span class="index-number">03</span> ALWAYS A STUDENT</p><h2 id="learning-title">Currently curious<span class="red-dot">.</span></h2></div><p class="section-aside">Following the questions.<br />Doing the coursework.</p></div>
+      <div class="learning-list">{learning.map(item => <a class="learning-row" style={`--bead: var(--${["red","blue","green"][Number(item.number) - 1] ?? "ochre"})`} href={href(`learning/#area-${item.number}`)}><span class="micro">{item.number}</span><h3>{item.title}</h3><span class="status"><span aria-hidden="true">↗</span> In progress</span><span class="row-arrow" aria-hidden="true">↗</span></a>)}</div>
+      <a class="text-link small-link section-link" href={href('learning/')}>Inside my learning <span aria-hidden="true">↗</span></a>
+    </section>
+    <section class="section about-teaser" aria-labelledby="about-title">
+      <div class="about-images"><Image src={portrait} alt="Portrait of Simon Mwaura." width={440} format="webp" loading="lazy" class="portrait-teaser" /><span class="portrait-caption micro">SIMON MWAURA / MAURITIUS</span></div>
+      <div class="about-copy"><p class="eyebrow"><span class="index-number">04</span> A LITTLE MORE HUMAN</p><h2 id="about-title">More than<br />the job title<span class="red-dot">.</span></h2><p>Electrical engineering was the starting point. These days, my work sits around complex systems, data, and the decisions we make with them.</p><p>There’s a creative side, too: INCOGNITO, graphic design, and whatever catches my eye through a camera.</p><a class="text-link small-link" href={href('about/')}>A bit about me <span aria-hidden="true">↗</span></a></div>
+      <div class="creative-strip"><Image src={design} alt="An expressive graphic composition from Simon’s recovered creative portfolio." width={650} format="webp" loading="lazy" /><Image src={photo} alt="A warm street photograph from Simon’s recovered photography portfolio." width={650} format="webp" loading="lazy" /><p class="micro">OTHER WAYS OF LOOKING.<br /><a href={href('about/#creative')}>DESIGN & PHOTOGRAPHY ↗</a></p></div>
+    </section>
+    <section class="notes-teaser"><p class="eyebrow">TANGENTS & WORKING THOUGHTS</p><h2>A place for notes.</h2><a class="text-link small-link" href={href('notes/')}>Read the notes <span aria-hidden="true">↗</span></a></section>
+  </div>
+</Base>
