@@ -1,6 +1,6 @@
 # Simon Mwaura — personal website
 
-Static Astro website for Simon's engineering work, learning, notes, and creative
+Static Astro website for my engineering work, learning, notes, and creative
 practice. The application lives at the repository root.
 
 ## Local development
@@ -25,10 +25,6 @@ npm.cmd run check:build
 npm.cmd run preview
 ```
 
-The default site origin is `https://painfulpastime.github.io` and the base path
-is `/personal_website/`, matching this repository's GitHub remote. This configures
-generated URLs; it does not enable or verify a live deployment. Preview at
-`http://127.0.0.1:4321/personal_website/` (or the port printed by Astro).
 
 The build checker verifies generated pages, internal links/assets, anchors, and
 draft exclusion. To check a different hosting path, set `BASE_PATH` for both the
@@ -77,17 +73,6 @@ GitHub Actions and run the workflow manually. GitHub requires this workflow
 to exist on the default branch before its manual Run workflow control appears.
 Do not run it until the migration and public content are approved.
 
-Website copy still needs Simon's editorial review before release, including the
-contact email, the tentative thesis case study (saved simulation results, not a
-rerun), and the dated October 2026 learning snapshot. Kokoro's repository remains
-private; its waveform is illustrative artwork. The CV is HTML only, and Notes
-has no published entries yet.
-
-## Attribution
-
-Selected portrait and portfolio imagery: Simon Mwaura, recovered from his former
-Wix site. Research plot: Simon's thesis revision. The check pattern, bead details,
-ink texture, and waveform are code assets from the migrated site.
 
 The legacy MIT notice is retained in `LICENSE`. Self-hosted fonts use the SIL
 Open Font License; full notices ship in `public/licenses/` and built output.
