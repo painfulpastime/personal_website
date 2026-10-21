@@ -1,3 +1,24 @@
-_site/
+node_modules/
+dist/
+dist-subpath/
+.astro/
+.env
+.env.*
+!.env.example
 
-*.DS_Store
+# Private source material and development artifacts are not site source.
+/content/
+/private/
+/briefs/
+/archives/
+/archive/
+/design/
+/mockups/
+/recovery/
+/academic_website_archive*/
+PROFILE_BRIEF*
+PROJECT_BRIEFS*
+.claude/
+.DS_Store
+Thumbs.db
+npm-debug.log*

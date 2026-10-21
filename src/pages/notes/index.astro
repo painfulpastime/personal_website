@@ -1,0 +1,7 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { href } from '../../lib/paths';
+const notes = (await getCollection('notes', ({data}) => !data.draft)).sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+<Base title="Notes" active="notes"><div class="wrap inner-page"><header class="page-intro"><p class="eyebrow">THOUGHTS IN VARIOUS STATES OF COMPLETION</p><h1>Notes &<br />other tangents<span class="red-dot">.</span></h1><p class="lead">A space for things I’m learning, ideas I’m turning over, and the occasional thought that refuses to stay in the margins.</p></header>{notes.length ? <ul class="note-list">{notes.map(note => <li><p class="micro">{note.data.date.toLocaleDateString('en-GB', {day:'numeric',month:'long',year:'numeric',timeZone:'UTC'})}</p><h2><a href={href(`notes/${note.id}/`)}>{note.data.title} ↗</a></h2><p>{note.data.description}</p></li>)}</ul> : <div class="empty-notes"><span class="asterisk" aria-hidden="true">✳</span><div><h2>Space for a thought.</h2><p>No published notes yet. In the meantime, the Learning page is a good place to see what’s occupying my curiosity.</p><a class="text-link small-link section-link" href={href('learning/')}>See what I’m learning <span aria-hidden="true">↗</span></a></div></div>}</div></Base>

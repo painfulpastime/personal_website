@@ -1,31 +1,94 @@
-A Github Pages template for academic websites. This was forked (then detached) by [Stuart Geiger](https://github.com/staeiou) from the [Minimal Mistakes Jekyll Theme](https://mmistakes.github.io/minimal-mistakes/), which is © 2016 Michael Rose and released under the MIT License. See LICENSE.md.
+# Simon Mwaura — personal website
 
-I think I've got things running smoothly and fixed some major bugs, but feel free to file issues or make pull requests if you want to improve the generic template / theme.
+Static Astro website for Simon's engineering work, learning, notes, and creative
+practice. The application lives at the repository root.
 
-### Note: if you are using this repo and now get a notification about a security vulnerability, delete the Gemfile.lock file. 
+## Local development
 
-# Instructions
+Requires Node.js 22.22+ and npm (verified with Node 24).
 
-1. Register a GitHub account if you don't have one and confirm your e-mail (required!)
-1. Fork [this repository](https://github.com/academicpages/academicpages.github.io) by clicking the "fork" button in the top right. 
-1. Go to the repository's settings (rightmost item in the tabs that start with "Code", should be below "Unwatch"). Rename the repository "[your GitHub username].github.io", which will also be your website's URL.
-1. Set site-wide configuration and create content & metadata (see below -- also see [this set of diffs](http://archive.is/3TPas) showing what files were changed to set up [an example site](https://getorg-testacct.github.io) for a user with the username "getorg-testacct")
-1. Upload any files (like PDFs, .zip files, etc.) to the files/ directory. They will appear at https://[your GitHub username].github.io/files/example.pdf.  
-1. Check status by going to the repository settings, in the "GitHub pages" section
-1. (Optional) Use the Jupyter notebooks or python scripts in the `markdown_generator` folder to generate markdown files for publications and talks from a TSV file.
+```powershell
+npm.cmd ci
+$env:ASTRO_TELEMETRY_DISABLED = '1'
+npm.cmd run dev
+```
 
-See more info at https://academicpages.github.io/
+Open the printed localhost URL under `/personal_website/`. Use `npm` instead of
+`npm.cmd` outside Windows PowerShell.
 
-## To run locally (not on GitHub Pages, to serve on your own computer)
+## Build and check
 
-1. Clone the repository and made updates as detailed above
-1. Make sure you have ruby-dev, bundler, and nodejs installed: `sudo apt install ruby-dev ruby-bundler nodejs`
-1. Run `bundle clean` to clean up the directory (no need to run `--force`)
-1. Run `bundle install` to install ruby dependencies. If you get errors, delete Gemfile.lock and try again.
-1. Run `bundle exec jekyll liveserve` to generate the HTML and serve it from `localhost:4000` the local server will automatically rebuild and refresh the pages on change.
+```powershell
+$env:ASTRO_TELEMETRY_DISABLED = '1'
+npm.cmd run build
+npm.cmd run check:build
+npm.cmd run preview
+```
 
-# Changelog -- bugfixes and enhancements
+The default site origin is `https://painfulpastime.github.io` and the base path
+is `/personal_website/`, matching this repository's GitHub remote. This configures
+generated URLs; it does not enable or verify a live deployment. Preview at
+`http://127.0.0.1:4321/personal_website/` (or the port printed by Astro).
 
-There is one logistical issue with a ready-to-fork template theme like academic pages that makes it a little tricky to get bug fixes and updates to the core theme. If you fork this repository, customize it, then pull again, you'll probably get merge conflicts. If you want to save your various .yml configuration files and markdown files, you can delete the repository and fork it again. Or you can manually patch. 
+The build checker verifies generated pages, internal links/assets, anchors, and
+draft exclusion. To check a different hosting path, set `BASE_PATH` for both the
+build and check; set `SITE_URL` to override the origin:
 
-To support this, all changes to the underlying code appear as a closed issue with the tag 'code change' -- get the list [here](https://github.com/academicpages/academicpages.github.io/issues?q=is%3Aclosed%20is%3Aissue%20label%3A%22code%20change%22%20). Each issue thread includes a comment linking to the single commit or a diff across multiple commits, so those with forked repositories can easily identify what they need to patch.
+```powershell
+$env:SITE_URL = 'https://example.com'
+$env:BASE_PATH = '/'
+npm.cmd run build
+npm.cmd run check:build
+```
+
+## Editing
+
+- Public project text: `src/content/projects/*.md`.
+- Notes: `src/content/notes/*.md`. Drafts default to true and are excluded from
+  the index and generated routes. `first-note.md` is an unpublished template.
+- Profile, learning, and contact data: `src/data/profile.ts`.
+- About and HTML CV: `src/pages/about.astro` and `src/pages/cv.astro`.
+- Styles: `src/styles/global.css`; selected images: `src/assets/`.
+- Public files copied directly into the build: `public/`.
+
+To publish a note, copy the template, write its content, set its date in
+`YYYY-MM-DD` format, and explicitly set `draft: false`. Preview before publishing.
+
+Only public website source and selected assets belong in this repository. Keep
+private briefs, raw research/CV files, archives, recovery media, and mockups
+outside it. Dependencies, Astro caches, and generated output are ignored.
+
+## Migration and release
+
+The Astro application was imported from the sibling `academic_website/web`
+folder onto the existing `migrate-to-astro` branch. The Jekyll implementation
+was removed from the working tree; its history remains in Git. No history was
+rewritten. The source folder, private briefs, and external archives were not
+modified or imported.
+
+`.github/workflows/pages.yml` contains the root-level GitHub Pages workflow.
+It runs only through a manual `workflow_dispatch` trigger, installs the locked
+dependencies with Node 24, builds for `/personal_website/`, runs
+`npm run check:build`, and uploads only `dist/`. Deployment depends on a
+successful build and check. Pushes and pull requests do not trigger it.
+
+When deployment is authorized, configure the repository's Pages source as
+GitHub Actions and run the workflow manually. GitHub requires this workflow
+to exist on the default branch before its manual Run workflow control appears.
+Do not run it until the migration and public content are approved.
+
+Website copy still needs Simon's editorial review before release, including the
+contact email, the tentative thesis case study (saved simulation results, not a
+rerun), and the dated October 2026 learning snapshot. Kokoro's repository remains
+private; its waveform is illustrative artwork. The CV is HTML only, and Notes
+has no published entries yet.
+
+## Attribution
+
+Selected portrait and portfolio imagery: Simon Mwaura, recovered from his former
+Wix site. Research plot: Simon's thesis revision. The check pattern, bead details,
+ink texture, and waveform are code assets from the migrated site.
+
+The legacy MIT notice is retained in `LICENSE`. Self-hosted fonts use the SIL
+Open Font License; full notices ship in `public/licenses/` and built output.
+See `THIRD_PARTY_NOTICES.md` for details.

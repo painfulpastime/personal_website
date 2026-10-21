@@ -1,0 +1,7 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+const projects = (await getCollection('projects')).sort((a,b) => a.data.order - b.data.order);
+---
+<Base title="Work" active="work"><div class="wrap inner-page"><header class="page-intro"><p class="eyebrow">SELECTED PROJECTS / SOFTWARE & SYSTEMS</p><h1>Ideas, put<br />to work<span class="red-dot">.</span></h1><p class="lead">A local reader. An electricity-demand forecast. Different problems, connected by a curiosity about how things work—and how to make them work better.</p></header><div class="project-grid">{projects.map((project,index) => <ProjectCard project={project} index={index} />)}</div></div></Base>

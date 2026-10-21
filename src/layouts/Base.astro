@@ -1,0 +1,42 @@
+---
+import '@fontsource/anton/400.css';
+import '@fontsource/dm-sans/400.css';
+import '@fontsource/dm-sans/500.css';
+import '@fontsource/dm-sans/700.css';
+import '../styles/global.css';
+import { href } from '../lib/paths';
+import { profile } from '../data/profile';
+interface Props { title?: string; description?: string; active?: string }
+const { title, description = 'Simon Mwaura — engineer, systems thinker, and creative. Exploring systems modelling, optimisation, software, and the decisions we make.', active } = Astro.props;
+const navigation = [['Work', 'work/'], ['Learning', 'learning/'], ['Notes', 'notes/'], ['About', 'about/']];
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site) : undefined;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#F5ECDC" />
+    <title>{title ? `${title} — Simon Mwaura` : 'Simon Mwaura — Engineer & systems thinker'}</title>
+    <link rel="icon" type="image/svg+xml" href={href('favicon.svg')} />
+    {canonical && <link rel="canonical" href={canonical} />}
+    <meta property="og:title" content={title ? `${title} — Simon Mwaura` : 'Simon Mwaura — Engineer & systems thinker'} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+  </head>
+  <body id="top">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header wrap">
+      <a class="wordmark" href={href()} aria-label="Simon Mwaura home">Simon Mwaura<span class="wordmark-beads" aria-hidden="true"><i></i><i></i><i></i></span></a>
+      <nav aria-label="Main navigation">{navigation.map(([label, path]) => <a href={href(path)} aria-current={active === label.toLowerCase() ? 'page' : undefined}>{label}</a>)}<a class="nav-contact" href="#contact">Let’s talk <span aria-hidden="true">↗</span></a></nav>
+    </header>
+    <main id="main"><slot /></main>
+    <footer id="contact" class="contact-footer">
+      <div class="footer-shuka shuka fringe-up"><div class="wrap"><div class="footer-intro"><p class="micro">GOOD CONVERSATIONS START SOMEWHERE.</p><span class="micro">KENYA → MAURITIUS</span></div>
+      <a class="contact-title" href={`mailto:${profile.email}`}>Let’s talk.<span aria-hidden="true">↗</span></a></div></div>
+      <div class="footer-base"><div class="wrap"><div class="footer-links"><a href={`mailto:${profile.email}`}>{profile.email}</a><div><a href={profile.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a href={href('cv/')}>View CV ↗</a><a href="#top" aria-label="Back to top">Back to top ↑</a></div></div>
+      <div class="footer-bottom"><span>© {new Date().getFullYear()} Simon Mwaura</span><span>A work in progress. Just like me.</span><span>ENGINEERING / IDEAS / EVERYTHING BETWEEN</span></div></div></div>
+    </footer>
+  </body>
+</html>
